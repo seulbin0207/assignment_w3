@@ -1,0 +1,11 @@
+package com.sparta.w3hwk.domain;
+
+import lombok.Getter;
+
+@Getter
+public class TextRequestDto {
+    private String title;
+    private String username;
+    private String password;
+    private String contents;
+}

@@ -1,0 +1,45 @@
+package com.sparta.w3hwk.controller;
+
+import com.sparta.w3hwk.domain.Text;
+import com.sparta.w3hwk.domain.TextRepository;
+import com.sparta.w3hwk.domain.TextRequestDto;
+import com.sparta.w3hwk.service.TextService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RequiredArgsConstructor
+@RestController
+public class TextController {
+    private final TextRepository textRepository;
+    private final TextService textService;
+
+    @GetMapping("/api/texts")
+    public List<Text> readText() { return textRepository.findAllByOrderByCreatedAtDesc(); }
+
+    @PostMapping("/api/texts")
+    public Text createText(@RequestBody TextRequestDto requestDto) {
+        Text text = new Text(requestDto);
+        return textRepository.save(text);
+    }
+
+    @GetMapping("/api/texts")
+    public Text readText() { return textRepository.findById(id); }
+
+    @GetMapping("/api/texts/password")
+    public String password() {
+    }
+
+    @PutMapping("/api/texts/{id}")
+    public Long updateText(@PathVariable Long id, @RequestBody TextRequestDto requestDto) {
+        textService.update(id, requestDto);
+        return id;
+    }
+
+    @DeleteMapping("/api/texts/{id}")
+    public Long deleteText(@PathVariable Long id) {
+        textRepository.deleteById(id);
+        return id;
+    }
+}

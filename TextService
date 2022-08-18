@@ -1,0 +1,26 @@
+package com.sparta.w3hwk.service;
+
+import com.sparta.w3hwk.domain.Text;
+import com.sparta.w3hwk.domain.TextRepository;
+import com.sparta.w3hwk.domain.TextRequestDto;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+
+
+@RequiredArgsConstructor
+@Service
+public class TextService {
+
+    private final TextRepository textRepository;
+
+    @Transactional
+    public Long update(Long id, TextRequestDto requestDto) {
+        Text text = textRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("아이디가 존재하지 않습니다.")
+        );
+        text.update(requestDto);
+        return text.getId();
+    }
+}
